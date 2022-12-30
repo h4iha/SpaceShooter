@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
+  - E_LaserBeam
+  - P_LaserBeam
   layers:
   - Default
   - TransparentFX
@@ -40,4 +43,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: P_LaserBeam
+    uniqueID: 2283335913
+    locked: 0
+  - name: E_LaserBeam
+    uniqueID: 1698277903
     locked: 0
