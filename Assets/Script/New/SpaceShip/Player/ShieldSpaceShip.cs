@@ -5,11 +5,11 @@ public class ShieldSpaceShip : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private int maxShield;
-    private Health shield;
+    private HealthSystem shield;
     public Action<int> onChangeValueShield;
     private void Awake()
     {
-        shield = new Health(maxShield, 1, HandleDeath);
+        shield = new HealthSystem(maxShield, 1, HandleDeath);
         shield.ReceiDamage();
 
     }

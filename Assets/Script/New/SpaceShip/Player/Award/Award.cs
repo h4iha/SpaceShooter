@@ -6,7 +6,7 @@ public class Award : MonoBehaviour
 {
     [SerializeField] private GameManager gameManager;
     [SerializeField] private AwardType type;
-    [SerializeField] private PrefabDrawing spriteRendererCreation;
+    [SerializeField] private ObjectDesign spriteRendererCreation;
     public AwardType Type { get { return type; } }
     private void Start()
     {

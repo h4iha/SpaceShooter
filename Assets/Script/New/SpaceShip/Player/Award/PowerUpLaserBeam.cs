@@ -15,7 +15,7 @@ public class PowerUpLaserBeam : MonoBehaviour
     {
         if (other.CompareTag(TagCharacter.Player.ToString()))
         {
-            other.GetComponent<PlayerSpaceShip>().IncreaseLevelLaserBeam();
+            other.GetComponent<PlayerSpaceShip>().PickUpLaserBeam();
         }
     }
 }

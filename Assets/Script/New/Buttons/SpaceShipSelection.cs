@@ -43,13 +43,13 @@ public class IndexChanger
     private int maxIndex;
     private int currentIndex;
 
-    private Action onIndexChangelld;
+    private Action onIndexChanged;
 
     public IndexChanger(int maxIndex, Action onIndexChanged)
     {
         this.maxIndex = maxIndex;
         this.currentIndex = 0;
-        this.onIndexChangelld = onIndexChanged;
+        this.onIndexChanged = onIndexChanged;
     }
 
     public void NextIndex()
@@ -59,13 +59,13 @@ public class IndexChanger
         {
             currentIndex = 0;
         }
-        onIndexChangelld?.Invoke();
+        onIndexChanged?.Invoke();
     }
 
     public int GetCurrentIndex { get { return currentIndex; } }
     public void Reset()
     {
         currentIndex = 0;
-        onIndexChangelld?.Invoke();
+        onIndexChanged?.Invoke();
     }
 }

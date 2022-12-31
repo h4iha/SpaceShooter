@@ -12,6 +12,14 @@ public enum TagLaserBeam
     [EnumMember(Value = "P_LaserBeam")] Player,
     [EnumMember(Value = "E_LaserBeam")] Enemy,
 }
+public enum TagName
+{
+    [EnumMember(Value = "Player")] Player,
+    [EnumMember(Value = "P_LaserBeam")] P_LaserBeam,
+    [EnumMember(Value = "Enemy")] Enemy,
+    [EnumMember(Value = "E_LaserBeam")] E_LaserBeam,
+    [EnumMember(Value = "Shield")] Shield,
+}
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
@@ -19,10 +27,10 @@ public class GameManager : MonoBehaviour
     {
         get { return instance; }
     }
-
+    [Header("Prefab")]
+    [SerializeField] private GameObject laserPrefab;
     [Header("Sprite")]
     [SerializeField] private Data spriteData;
-    private int indexPlayer;
     private Sprite playeSpaceShipSprite;
     private Sprite[] p_LaserBeamSprites;
     private Sprite[] enemySpaceShips;
@@ -40,7 +48,10 @@ public class GameManager : MonoBehaviour
     [Space]
     [Header("Score System")]
     private int currentScores;
-    #region Sprite
+    #region Prefab
+    public GameObject LaserPrefab { get { return laserPrefab; } }
+    #endregion
+    #region Sprites
     public Sprite PlayerSpaceShipSprite { get { return playeSpaceShipSprite; } }
     public Sprite[] P_LaserBeamSprites { get { return p_LaserBeamSprites; } }
     public Sprite[] EnemySpaceShipSprites { get { return enemySpaceShips; } }
@@ -50,15 +61,15 @@ public class GameManager : MonoBehaviour
 
     public Sprite GetNumber(int number) { return spriteData.Numbers[number]; }
     #endregion
-    public int CurrentScores { get { return currentScores; } }
-    #region Player
+    #region Stats
     public int MaxHearts { get { return maxLives; } }
     public int MaxLevelLaser { get { return maxLevelLaser; } }
     public int MaxLevelShield { get { return maxLevelShield; } }
-    public int CurrentHearts { get { return curretnLives; } set { curretnLives = value; } }
+    public int CurrentLives { get { return curretnLives; } set { curretnLives = value; } }
     public int CurrentLevelLaser { get { return currentLevelLaser; } set { curretnLives = value; } }
     public int CurrentLevelShield { get { return currentLevelShield; } set { curretnLives = value; } }
     #endregion
+    public int CurrentScores { get { return currentScores; } }
     private void Awake()
     {
         instance = this;

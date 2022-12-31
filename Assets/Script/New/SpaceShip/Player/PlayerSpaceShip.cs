@@ -1,29 +1,30 @@
+using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-
 public class PlayerSpaceShip : MonoBehaviour
 {
     private GameManager gameManager;
     [Header("Sprites")]
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Details details;
     [SerializeField] private Fire fire;
     [SerializeField] private ShieldSpaceShip shieldSpaceShip;
-    [SerializeField] private PrefabDrawing prefabDrawing;
-    [SerializeField] private TagLaserBeam laserTagForEnemy;
+    [SerializeField] private ObjectDesign prefabDrawing;
+    //[SerializeField] private TagLaserBeam laserTagForEnemy;
+    [SerializeField] private TagName[] tagNames;
     [SerializeField] private Undying undying;
+    //private string[] allTag;
+    [Header("Stats")]
     private Stats stats;
     private LaserBeam laserBeamPrefab;
     private LaserBeam laserBeam;
-    private Health playerLives;
-    private Health playerHP;
     private Vector3 transformStart;
+    private List<string> listTags = new List<string>();
 
     private void Awake()
     {
         gameManager = GameManager.Instance;
-        transformStart = transform.position;
-        spriteRenderer.sprite = gameManager.PlayerSpaceShipSprite;
-        prefabDrawing.UpdatePolygon2D(true);
         //laserBeamPrefab = gameManager.P_LaserBeams[0].GetComponent<LaserBeam>();
         UpdateStats();
         UpdateLaserBeam();
@@ -31,9 +32,8 @@ public class PlayerSpaceShip : MonoBehaviour
     }
     private void UpdateStats()
     {
-        stats = new Stats(4, 1, 1, 200, 2.5f);
-        playerLives = new Health(stats.MaxLives, HandleGameOver);
-        playerHP = new Health(stats.MaxHP, HandleDeath);
+        stats = new Stats(gameManager.CurrentLives, true);
+        details.CreateNewStats(stats);
     }
     private void UpdateLaserBeam()
     {
@@ -46,12 +46,11 @@ public class PlayerSpaceShip : MonoBehaviour
         //fire = this.AddComponent<Fire>();
         fire.IsAutomatic = true;
         fire.LaserBeamPrefab = laserBeam.gameObject;
-        fire.RateOfFire = 3;
-        fire.SpeedProjectTile = 100;
+        fire.RateOfFire = stats.RateOfFire;
+        fire.SpeedProjectTile = stats.SpeedProjectTile;
     }
     private void HandleDeath()
     {
-        playerLives.ReceiDamage();
         transform.position = transformStart;
         undying.gameObject.SetActive(true);
     }
@@ -59,19 +58,16 @@ public class PlayerSpaceShip : MonoBehaviour
     {
         Destroy(gameObject);
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void PickUpLaserBeam(int value = 1)
     {
-        if (collision.CompareTag(laserTagForEnemy.ToString()))
-        {
-            playerHP.ReceiDamage();
-        }
+        details.onIncreaseLevelLaserBeam?.Invoke(value);
     }
-    public void IncreaseLevelLaserBeam()
+    public void PickUpShield(int value = 1)
     {
-        stats.IncreaseLevelLaserBeam();
+        details.onIncreaseLevelShield?.Invoke(value);
     }
-    public void ActiveShield()
+    public void PickUpLive(int value = 1)
     {
-        shieldSpaceShip.gameObject.SetActive(true);
+        details.onIncreaseLives?.Invoke(value);
     }
 }

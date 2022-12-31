@@ -1,18 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PrefabDrawing : MonoBehaviour
+public class ObjectDesign : MonoBehaviour
 {
+    [SerializeField] SpriteRenderer spriteRenderer;
+    private Sprite objectSprite;
     private PolygonCollider2D polygonCollider;
-    public void UpdatePolygon2D(bool isTrigger)
+    public void UpdatePolygon2D()
     {
+        spriteRenderer.sprite = objectSprite;
         polygonCollider = this.GetComponent<PolygonCollider2D>();
         if (polygonCollider != null)
         {
             Destroy(polygonCollider);
         }
-        this.AddComponent<PolygonCollider2D>().isTrigger = isTrigger;
+        this.AddComponent<PolygonCollider2D>().isTrigger = true;
     }
 }

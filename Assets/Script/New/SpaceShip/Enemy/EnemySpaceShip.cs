@@ -11,7 +11,7 @@ public class EnemySpaceShip : MonoBehaviour
     [SerializeField] private Transform laserBeamPlace;
     private Stats stats;
     private LaserBeam laserBeam;
-    private Health HP;
+    private HealthSystem HP;
     private void Awake()
     {
         UpdateStats();
@@ -21,7 +21,7 @@ public class EnemySpaceShip : MonoBehaviour
     private void UpdateStats()
     {
         stats = new Stats(1);
-        HP = new Health(stats.MaxHP, HandleDeath);
+        HP = new HealthSystem(stats.MaxHP, HandleDeath);
     }
     private void UpdateLaserBeam()
     {
